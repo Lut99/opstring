@@ -15,6 +15,9 @@ All tags can be found in the [tags](https://github.com/Lut99/opstring/tags) page
 ## Usage
 For a complete overview of what the library has to offer, check the [wiki](https://github.com/Lut99/opstring/wiki) page.
 
+## Dependencies
+The OpString class only depends on the [`unicode-segmentation`](https://docs.rs/unicode-segmentation/latest/unicode_segmentation/) package.
+
 ## Contribution
 Do you have a suggestion, bugfix or something you don't like? Let it know by creating an issues in the [issues](https://github.com/Lut99/opstring/issues) page, and we'll look into it as soon as we can.
 

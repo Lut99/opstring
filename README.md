@@ -12,6 +12,13 @@ opstring = { git = "https://github.com/Lut99/opstring", tag="v1.0.0" }
 ```
 All tags can be found in the [tags](https://github.com/Lut99/opstring/tags) page.
 
+## Testing
+The OpString library has build-in unit tests. Run them for the library by running:
+```
+cargo test
+```
+either in the library's root folder or in the root folder of the project including this library.
+
 ## Usage
 For a complete overview of what the library has to offer, check the [wiki](https://github.com/Lut99/opstring/wiki) page.
 

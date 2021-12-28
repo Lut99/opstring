@@ -4,7 +4,7 @@
  * Created:
  *   22 Dec 2021, 17:20:49
  * Last edited:
- *   27 Dec 2021, 17:04:13
+ *   28 Dec 2021, 14:03:55
  * Auto updated?
  *   Yes
  *
@@ -156,10 +156,7 @@ impl<'a> OpString<'a> {
         }
 
         // Nothing found; must be out-of-bounds
-        let last = self.data.last();
-        if last == None { return 1; }
-        let last_un = last.unwrap();
-        return last_un.0 + last_un.1.len();
+        return self.data.len();
     }
 
     /// The len() operator for the OpString.

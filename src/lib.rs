@@ -4,7 +4,7 @@
  * Created:
  *   22 Dec 2021, 17:20:49
  * Last edited:
- *   28 Dec 2021, 14:03:55
+ *   28 Dec 2021, 14:48:05
  * Auto updated?
  *   Yes
  *
@@ -21,10 +21,105 @@ use unicode_segmentation::{UnicodeSegmentation};
 
 #[cfg(test)]
 mod tests {
+    use super::*;
+
     #[test]
-    fn it_works() {
-        let result = 2 + 2;
-        assert_eq!(result, 4);
+    fn empty_string() {
+        // Try to create the OpString around the empty string
+        let ops = OpString::new("");
+        // Make sure there is nothing in there
+        assert_eq!(ops.len(), 0);
+    }
+
+    #[test]
+    fn ascii_string() {
+        // Try to create the OpString around a simple string of only ascii characters
+        let ops = OpString::new("Hello, world!");
+
+        // Check the length
+        assert_eq!(ops.len(), 13);
+
+        // Check the characters
+        assert_eq!(ops[ 0], "H");
+        assert_eq!(ops[ 1], "e");
+        assert_eq!(ops[ 2], "l");
+        assert_eq!(ops[ 3], "l");
+        assert_eq!(ops[ 4], "o");
+        assert_eq!(ops[ 5], ",");
+        assert_eq!(ops[ 6], " ");
+        assert_eq!(ops[ 7], "w");
+        assert_eq!(ops[ 8], "o");
+        assert_eq!(ops[ 9], "r");
+        assert_eq!(ops[10], "l");
+        assert_eq!(ops[11], "d");
+        assert_eq!(ops[12], "!");
+    }
+
+    #[test]
+    fn ascii_string_iter() {
+        // Try to create the OpString around a simple string of only ascii characters
+        let par = "Hello, world!";
+        let ops = OpString::new(par);
+
+        // Iterate over the pairs
+        let mut j: usize = 0;
+        for (i, c) in ops.iter() {
+            assert_eq!(*i, j);
+            assert_eq!(*c, String::from(par.chars().nth(*i).unwrap()));
+            j += 1;
+        }
+
+        // Iterate over the characters
+        let mut citer = ops.chars();
+        assert_eq!(citer.next(), Some("H"));
+        assert_eq!(citer.next(), Some("e"));
+        assert_eq!(citer.next(), Some("l"));
+        assert_eq!(citer.next(), Some("l"));
+        assert_eq!(citer.next(), Some("o"));
+        assert_eq!(citer.next(), Some(","));
+        assert_eq!(citer.next(), Some(" "));
+        assert_eq!(citer.next(), Some("w"));
+        assert_eq!(citer.next(), Some("o"));
+        assert_eq!(citer.next(), Some("r"));
+        assert_eq!(citer.next(), Some("l"));
+        assert_eq!(citer.next(), Some("d"));
+        assert_eq!(citer.next(), Some("!"));
+    }
+
+    #[test]
+    fn utf8_string() {
+        // Try to create the OpString around a more complicated string of special characters
+        let ops = OpString::new(":⁾");
+
+        // Check the length
+        assert_eq!(ops.len(), 2);
+
+        // Check the characters
+        assert_eq!(ops[ 0], ":");
+        assert_eq!(ops[ 1], "⁾");
+    }
+
+    #[test]
+    fn utf8_string_iter() {
+        // Try to create the OpString around a simple string of only ascii characters
+        let par = ":⁾";
+        println!("par len: {}", par.len());
+        let ops = OpString::new(par);
+
+        // Iterate over the pairs
+        let mut j: usize = 0;
+        for (i, c) in ops.iter() {
+            assert_eq!(*i, j);
+            for k in 0..c.len() {
+                assert_eq!((*c).bytes().nth(k).unwrap(), par.bytes().nth(*i + k).unwrap());
+            }
+            j += (*c).len();
+        }
+
+        // Iterate over the characters
+        let mut citer = ops.chars();
+        assert_eq!(citer.next(), Some(":"));
+        assert_eq!(citer.next(), Some("⁾"));
     }
 }
 
